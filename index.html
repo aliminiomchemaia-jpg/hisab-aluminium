@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>حساب الألمنيوم</title>
+<style>
+body{font-family:Arial;background:#f1f4f8;margin:0;padding:16px;color:#172536}
+header{background:#123c59;color:white;padding:22px;border-radius:16px;text-align:center}
+h2{margin:5px}
+.card{background:white;padding:16px;border-radius:14px;margin-top:14px;box-shadow:0 2px 8px #ddd}
+label{display:block;margin:13px 0 6px;font-weight:bold}
+input,select{width:100%;padding:12px;box-sizing:border-box;border:1px solid #bbb;border-radius:9px;font-size:17px;background:white}
+button{width:100%;padding:14px;background:#087e57;color:white;border:0;border-radius:10px;font-size:18px;margin-top:18px}
+.result{background:#e4f5ed;padding:15px;border-radius:10px;margin-top:15px;line-height:2}
+.price{font-size:25px;color:#087e57;font-weight:bold}
+small{color:#667}
+</style>
+</head>
+<body>
+<header>
+<h2>🔧 حساب الألمنيوم</h2>
+<p>الشرجم • البيبان • الكوزينات • الكوليس • الأوفرون</p>
+</header>
+
+<div class="card">
+<h3>معلومات الخدمة</h3>
+<label>نوع الخدمة</label>
+<select id="type">
+<option>شرجم</option>
+<option>باب ألمنيوم</option>
+<option>كوزينة</option>
+<option>كوليس</option>
+<option>أوفرون</option>
+<option>خدمة أخرى</option>
+</select>
+
+<label>العرض بالسنتيمتر</label>
+<input id="w" type="number" placeholder="مثلا 120">
+
+<label>الطول بالسنتيمتر</label>
+<input id="h" type="number" placeholder="مثلا 100">
+
+<label>الكمية</label>
+<input id="qty" type="number" value="1" min="1">
+
+<label>عدد الإطارات أو المسارات المحسوبة</label>
+<input id="frames" type="number" value="1" min="1">
+
+<label>ثمن المتر ديال البروفيل بالدرهم</label>
+<input id="rate" type="number" value="50">
+
+<label>طول البروفيل المتوفر بالمتر</label>
+<input id="stock" type="number" value="6">
+
+<label>مصاريف الزجاج والإكسيسوار بالدرهم</label>
+<input id="extra" type="number" value="0">
+
+<label>مصاريف الخدمة بالدرهم</label>
+<input id="labor" type="number" value="0">
+
+<label>الربح اللي بغيتي بالدرهم</label>
+<input id="profit" type="number" value="0">
+
+<button onclick="calculate()">احسب الثمن</button>
+<div id="result" class="result" style="display:none"></div>
+<button onclick="window.print()" style="background:#123c59">طبع الحساب</button>
+</div>
+<script>
+function calculate(){
+let w=Number(document.getElementById('w').value);
+let h=Number(document.getElementById('h').value);
+let q=Number(document.getElementById('qty').value);
+let f=Number(document.getElementById('frames').value);
+let rate=Number(document.getElementById('rate').value);
+let stock=Number(document.getElementById('stock').value);
+let extra=Number(document.getElementById('extra').value);
+let labor=Number(document.getElementById('labor').value);
+let profit=Number(document.getElementById('profit').value);
+if(w<=0||h<=0||q<=0||f<=0||rate<0||stock<=0){
+alert('دخل القياسات والأرقام بشكل صحيح');return;
+}
+let length=(2*(w+h)/100)*q*f;
+let bars=Math.ceil(length/stock);
+let material=length*rate;
+let total=material+extra+labor+profit;
+document.getElementById('result').style.display='block';
+document.getElementById('result').innerHTML=
+'<h3>📋 نتيجة الحساب</h3>'+
+'نوع الخدمة: '+document.getElementById('type').value+'<br>'+
+'الكمية: '+q+'<br>'+
+'مجموع الأمتار التقديري: '+length.toFixed(2)+' متر<br>'+
+'عدد البروفيلات ('+stock+' متر): '+bars+' حبات<br>'+
+'ثمن البروفيل: '+material.toFixed(2)+' DH<br>'+
+'الزجاج والإكسيسوار: '+extra.toFixed(2)+' DH<br>'+
+'الخدمة: '+labor.toFixed(2)+' DH<br>'+
+'الربح: '+profit.toFixed(2)+' DH<br><hr>'+
+'<div class="price">المجموع: '+total.toFixed(2)+' DH</div>'+
+'<small>ملاحظة: هذا تقدير أولي لمحيط الإطار، وليس لائحة تقطيع نهائية. خاص تعديل عدد الإطارات والمسارات حسب نوع الخدمة.</small>';
+}
+</script>
+</body>
+</html>
