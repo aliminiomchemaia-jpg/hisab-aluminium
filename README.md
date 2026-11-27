@@ -1,2 +1,2 @@
-5# hisab-aluminium
+ hisab-aluminium
 Application de calcul aluminium
